@@ -48,10 +48,19 @@ public class Ex1 {
 			String student = JOptionPane.showInputDialog("Write the name of the student:");
 
 			for (int j = 0; j < nMarks; j++) {
+				// We iterate for the number of marks introduced
 				double mark = Double.parseDouble(JOptionPane.showInputDialog("Write the mark of the student:"));
+				
+				// We add each mark into "marks" arraylist
 				marks.add(mark);
 			}
+			// We use the average method to do the average
 			Double avg = average(marks);
+			
+			// We need to reset "marks" for every student
+			marks.clear();
+			
+			// We put into the dictionary the student with the average mark
 			students.put(student, avg);
 		}
 	}
