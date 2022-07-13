@@ -48,6 +48,7 @@ public class Ex4 {
 		switch (action) {
 		case "exit":
 			// End of the program
+			JOptionPane.showMessageDialog(null, "Closing... Come back soon!");
 			System.out.println("----------");
 			System.out.println("End of the program.");
 			break;
@@ -126,8 +127,9 @@ public class Ex4 {
 		nProducts = Integer.parseInt(JOptionPane.showInputDialog("Write the number of products you want to buy "
 				+ "(if you want two same products you will need to introduce them two times):"));
 
+		int i = 0;
 		// We ask same times as times the user told
-		for (int i = 0; i < nProducts; i++) {
+		while(i<nProducts) {
 			// We ask the name of the product
 			String name = JOptionPane.showInputDialog("Write the name of the product you want to buy:");
 
@@ -138,13 +140,28 @@ public class Ex4 {
 			priceNum[1] = Double
 					.parseDouble(JOptionPane.showInputDialog("Write the number of products of this type do you want:"));
 
-			// We get the price of the product the user wants summoning the dictionary
-			priceNum[0] = products.get(name)[0];
+			// We check the stock before adding the products to the array of the client
+			if(products.containsKey(name)) {
+				// We get the price of the product the user wants summoning the dictionary
+				priceNum[0] = products.get(name)[0];
 
-			// Then we add it to the arraylist
-			purchase.add(priceNum);
-
-			System.out.println("Product added to the purchase.");
+				// Then we add it to the arraylist
+				purchase.add(priceNum);
+				
+				// We remove 1 product because the client just bought it
+				if(products.get(name)[1] >1) {
+					// If there's more than 1 we just reduce the stock
+					products.get(name)[1]--;
+				} else {
+					// If there's only 1 we eliminate all the product
+					products.remove(name);
+				}
+				System.out.println("Product added to the purchase.");
+				i++;
+			} else {
+				// If the product doesn't exist
+				JOptionPane.showMessageDialog(null, "Sorry, there's not enough stock for the product wanted", "No Stock", 0);
+			}
 		}
 
 		System.out.println("Purchase finished successfully!");
